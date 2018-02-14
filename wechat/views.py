@@ -29,7 +29,7 @@ def wechat(request):
         echo_str = request.GET.get('echostr', '')
         return HttpResponse(echo_str, content_type="text/plain")
     elif request.method == 'POST':  
-		if encrypt_type == 'raw':
+        if encrypt_type == 'raw':
             msg = parse_message(request.body)
             if msg.type == 'text':
                 reply = create_reply('这是条文字消息', msg)
@@ -37,6 +37,8 @@ def wechat(request):
                 reply = create_reply('这是条图片消息', msg)
             elif msg.type == 'voice':
                 reply = create_reply('这是条语音消息', msg)
+            elif msg.type == 'location':
+                reply = create_reply('上报地理位置', msg)
             else:
                 reply = create_reply('这是条其他类型消息', msg)
             return HttpResponse(reply.render(), content_type="application/xml")
@@ -45,12 +47,7 @@ def wechat(request):
 
             crypto = WeChatCrypto(WECHAT_TOKEN, WECHAT_AES_KEY, WECHAT_APPID)
             try:
-                msg = crypto.decrypt_message(
-                    request.body,
-                    msg_signature,
-                    timestamp,
-                    nonce
-                )
+                msg = crypto.decrypt_message(request.body, msg_signature, timestamp, nonce)
             except (InvalidSignatureException, InvalidAppIdException):
                 return HttpResponse(status=403)
             else:
