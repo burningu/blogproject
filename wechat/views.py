@@ -34,7 +34,7 @@ def wechat(request):
             if msg.type == 'text':
                 reply = create_reply('这是条文字消息', msg)
             elif msg.type == 'image':
-                reply = create_reply('这是条图片消息', msg)
+                reply = create_reply(msg.image, msg)
             elif msg.type == 'voice':
                 reply = create_reply('这是条语音消息', msg)
             elif msg.type == 'location':
