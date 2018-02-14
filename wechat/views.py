@@ -32,7 +32,7 @@ def wechat(request):
         if encrypt_type == 'raw':
             msg = parse_message(request.body)
             if msg.type == 'text':
-                reply = create_reply('这是条文字消息', msg)
+                reply = create_reply(msg.content, msg)
             elif msg.type == 'image':
                 reply = create_reply(msg.image, msg)
             elif msg.type == 'voice':
