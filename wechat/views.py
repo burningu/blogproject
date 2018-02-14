@@ -39,6 +39,8 @@ def wechat(request):
                 reply = create_reply('这是条语音消息', msg)
             elif msg.type == 'location':
                 reply = create_reply(str(msg.location), msg)
+            elif msg.type == 'event':
+                reply = create_reply(str(msg.event), msg)
             else:
                 reply = create_reply('这是条其他类型消息', msg)
             return HttpResponse(reply.render(), content_type="application/xml")
