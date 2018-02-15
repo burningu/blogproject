@@ -9,8 +9,8 @@ from wechatpy.exceptions import (
 )
 
 WECHAT_TOKEN = 'abcd'
-WECHAT_AES_KEY = ''
-WECHAT_APPID = ''
+WECHAT_AES_KEY = '38ecad2n4UvjND8kzvWscTankK2wonHpyCIZHfk2IVr'
+WECHAT_APPID = 'wx0b1b456e3866f75a'
 
 @csrf_exempt
 def wechat(request):
@@ -28,7 +28,7 @@ def wechat(request):
     if request.method == 'GET':
         echo_str = request.GET.get('echostr', '')
         return HttpResponse(echo_str, content_type="text/plain")
-    elif request.method == 'POST':  
+    elif request.method == 'POST':
         if encrypt_type == 'raw':
             msg = parse_message(request.body)
             if msg.type == 'text':
