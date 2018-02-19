@@ -11,6 +11,7 @@ from wechatpy.exceptions import (
 WECHAT_TOKEN = 'abcd'
 WECHAT_AES_KEY = '38ecad2n4UvjND8kzvWscTankK2wonHpyCIZHfk2IVr'
 WECHAT_APPID = 'wx0b1b456e3866f75a'
+WECHAT_APPSecret = 'a3e866e717c58386ca74a47819a1380d'
 
 @csrf_exempt
 def wechat(request):
@@ -29,6 +30,22 @@ def wechat(request):
         echo_str = request.GET.get('echostr', '')
         return HttpResponse(echo_str, content_type="text/plain")
     elif request.method == 'POST':
+        from wechatpy import WeChatClient
+        client =  WeChatClient(WECHAT_APPID, WECHAT_APPSecret)
+        client.menu.create({
+            'button':[
+                {
+                    "type": "scancode_waitmsg",
+                    "name": "扫一扫条形码",
+                    "key" : 'isbn_sao'
+                },
+                {
+                    "type": "view",
+                    "name": "我的网站",
+                    "url": "这个网址下文细说，这个字典可以暂时去掉"
+                }
+            ]
+        })
         if encrypt_type == 'raw':
             msg = parse_message(request.body)
             if msg.type == 'text':
