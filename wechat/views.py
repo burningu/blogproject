@@ -15,7 +15,7 @@ WECHAT_APPSecret = 'a3e866e717c58386ca74a47819a1380d'
 
 @csrf_exempt
 def wechat(request):
-
+    
     from wechatpy import WeChatClient
     client =  WeChatClient(WECHAT_APPID, WECHAT_APPSecret)
     client.menu.create({
@@ -34,7 +34,6 @@ def wechat(request):
     })
     menu = client.menu.get()
     print(menu)
-
     signature = request.GET.get('signature', '')
     timestamp = request.GET.get('timestamp', '')
     nonce = request.GET.get('nonce', '')
