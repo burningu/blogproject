@@ -32,6 +32,8 @@ def wechat(request):
             }
         ]
     })
+    menu = client.menu.get()
+    print(menu)
 
     signature = request.GET.get('signature', '')
     timestamp = request.GET.get('timestamp', '')
